@@ -5,7 +5,6 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-# Inicia Chrome sin cargar perfil
 driver = webdriver.Edge()
 
 driver.get("https://gemini.google.com/app?hl=es")
@@ -45,7 +44,6 @@ Devuélvelo exclusivamente como una lista de conjuntos de literales en formato d
 """
 
 
-# Usa JavaScript para insertar todo el texto (más confiable en contenteditable)
 driver.execute_script("arguments[0].innerText = arguments[1];", input_box, mi_prompt)
 
 # Simula presionar Enter para enviar

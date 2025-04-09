@@ -2,14 +2,13 @@ from typing import List, Set, Tuple, Dict, Optional
 import ast
 import re
 
-# Definiciones básicas para resolución
+
 Literal = str
 Clausula = Set[Literal]
 Sustitucion = Dict[str, str]
 
 
 def es_variable(x: str) -> bool:
-    # Se asume que las variables comienzan con minúscula.
     return x[0].islower()
 
 
@@ -64,8 +63,7 @@ def resolver_fol(ci: Clausula, cj: Clausula) -> Set[Clausula]:
 
 def resolucion_fol(bc: List[Clausula], objetivo: Clausula) -> bool:
     """
-    Paso 8 y 9: Se trabaja con la base de conocimiento en CNF (bc) y se añade el objetivo
-    (usualmente la negación de la consulta). Se aplican las resoluciones en pares de cláusulas.
+    Paso 8 y 9: Se trabaja con la base de conocimiento en CNF (bc) y se añade el objetivo.
     Si se deriva la cláusula vacía, se demuestra el objetivo.
     """
     bc = bc.copy()
@@ -92,11 +90,6 @@ def resolucion_fol(bc: List[Clausula], objetivo: Clausula) -> bool:
             if c not in bc:
                 bc.append(set(c))
 
-
-# -------------------------
-# Funciones para los 7 pasos de transformación a CNF
-# (Se incluyen por completitud, en caso de que se desee transformar una fórmula en cadena)
-# -------------------------
 
 def eliminar_implicaciones(formula: str) -> str:
     """
@@ -196,23 +189,7 @@ def convertir_a_cnf(formula: str) -> List[Clausula]:
     return clauses
 
 
-# -------------------------
-# Ejemplo de uso leyendo la base generada desde un archivo
-# -------------------------
-
 if __name__ == "__main__":
-    # Se asume que el archivo "respuesta_gemini_ajustada.txt" contiene la salida de Gemini,
-    # por ejemplo:
-    # [
-    #  {'Hombre(Marco)'},
-    #  {'Pompeyano(Marco)'},
-    #  {'∀x.(Pompeyano(x) -> Romano(x))'},
-    #  {'Gobernante(Cesar)'},
-    #  {'∀x.(Romano(x) -> (Leal(x, Cesar) v Odia(x, Cesar)))'},
-    #  {'∀x.∀y.(IntentaAsesinar(x, y) -> (Gobernante(y) ^ ~Leal(x, y)))'},
-    #  {'IntentaAsesinar(Marco, Cesar)'},
-    #  {'~Odia(Marco, Cesar)'}
-    # ]
 
     with open("respuesta_gemini_ajustada.txt", "r", encoding="utf-8") as f:
         contenido = f.read()
